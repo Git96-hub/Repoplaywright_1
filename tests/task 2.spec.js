@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://todomvc.com/');
+  await page.getByRole('link', { name: 'React New', exact: true }).click();
+  await expect(page.getByTestId('text-input')).toBeVisible();
+  await page.getByTestId('text-input').click();
+  await page.getByTestId('text-input').fill('excerise');
+  await page.getByTestId('text-input').press('Enter');
+  await page.getByTestId('text-input').fill('freshup');
+  await page.getByTestId('text-input').press('Enter');
+  await page.getByTestId('text-input').fill('drinking water');
+  await page.getByTestId('text-input').press('Enter');
+  await page.getByTestId('text-input').fill('having breakfast');
+  await page.getByTestId('text-input').press('Enter');
+  await page.getByTestId('text-input').fill('start learning');
+  await page.getByTestId('text-input').press('Enter');
+  await expect(page.locator('body')).toBeVisible();
+  await expect(page.getByTestId('text-input')).toBeEmpty();
+  await page.getByTestId('text-input').click();
+  await page.getByTestId('text-input').fill('1 hour');
+  await expect(page.getByTestId('text-input')).toHaveValue('1 hour');
+  await page.getByRole('listitem').filter({ hasText: 'excerise' }).getByTestId('todo-item-toggle').check();
+  await page.getByRole('listitem').filter({ hasText: 'freshup' }).getByTestId('todo-item-toggle').check();
+  await page.getByRole('listitem').filter({ hasText: 'drinking water' }).getByTestId('todo-item-toggle').check();
+  await page.getByRole('listitem').filter({ hasText: 'having breakfast' }).getByTestId('todo-item-toggle').check();
+  await expect(page.locator('body')).toBeVisible();
+  await page.getByRole('link', { name: 'Active' }).click();
+  await expect(page.getByTestId('todo-item-label')).toBeVisible();
+});
